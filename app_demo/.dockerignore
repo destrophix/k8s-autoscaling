@@ -1,0 +1,11 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.poetry
+.env
+venv
+.git
+.gitignore
+Dockerfile
+README.rst
