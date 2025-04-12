@@ -1,0 +1,17 @@
+kind: HTTPScaledObject
+apiVersion: http.keda.sh/v1alpha1
+metadata:
+  name: foo-app
+spec:
+  hosts:
+    - "foo.local"
+  targetPendingRequests: 100
+  scaleTargetRef:
+    service: foo-app
+    kind: Deployment
+    apiVersion: apps/v1
+    name: foo-app
+    port: 8000
+  replicas:
+    min: 5
+    max: 10
