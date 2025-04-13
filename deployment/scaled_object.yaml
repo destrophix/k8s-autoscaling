@@ -5,7 +5,6 @@ metadata:
 spec:
   hosts:
     - "foo.local"
-  targetPendingRequests: 100
   scaleTargetRef:
     service: foo-app
     kind: Deployment
@@ -13,5 +12,11 @@ spec:
     name: foo-app
     port: 8000
   replicas:
-    min: 5
+    min: 1
     max: 10
+  scaledownPeriod: 10
+  scalingMetric:
+    requestRate:
+      granularity: 1s
+      targetValue: 2
+      window: 2s
