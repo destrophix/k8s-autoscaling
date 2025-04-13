@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+import time
 
 app = FastAPI()
 
@@ -13,4 +14,5 @@ def readiness_probe():
 
 @app.get("/foo")
 def get_foo():
+    time.sleep(0.2)  # Simulates work
     return JSONResponse(content={"result": "bar"})
