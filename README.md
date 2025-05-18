@@ -89,3 +89,13 @@
    ```sh
    helm upgrade --install http-add-on kedacore/keda-add-ons-http
    ```
+
+### Steps to setup VPA
+1. Clone autoscaler repository
+   ```shell
+   git clone https://github.com/kubernetes/autoscaler.git
+   ```
+2. Run to setup script
+   ```shell
+    ./autoscaler/vertical-pod-autoscaler/hack/vpa-up.sh
+   ```

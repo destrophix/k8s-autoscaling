@@ -5,7 +5,7 @@ metadata:
   labels:
     app: foo-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: foo-app
@@ -21,6 +21,11 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 8000
+          resources:
+            requests:
+              cpu: "10m"
+            limits:
+              cpu: "50m"
           readinessProbe:
             httpGet:
               path: /health/readiness
