@@ -1,6 +1,8 @@
 kind: HTTPScaledObject
 apiVersion: http.keda.sh/v1alpha1
 metadata:
+  annotations:
+    httpscaledobject.keda.sh/skip-scaledobject-creation: "true"
   name: foo-app
 spec:
   hosts:
@@ -14,9 +16,48 @@ spec:
   replicas:
     min: 1
     max: 10
-  scaledownPeriod: 10
+  scaledownPeriod: 1
   scalingMetric:
     requestRate:
       granularity: 1s
-      targetValue: 2
-      window: 2s
+      targetValue: 5
+      window: 1s
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  labels:
+    scaledobject.keda.sh/name: foo-app
+  name: foo-app
+  namespace: default
+spec:
+  advanced:
+    restoreToOriginalReplicaCount: true
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 0 # Set to 0 for near instant HPA scale-down decision
+          policies:
+            - type: Percent
+              value: 100
+              periodSeconds: 1
+        scaleUp:
+          stabilizationWindowSeconds: 0 # Set to 0 for near instant HPA scale-up decision
+          policies:
+            - type: Percent
+              value: 100
+              periodSeconds: 1
+    scalingModifiers: {}
+  cooldownPeriod: 1
+  maxReplicaCount: 10
+  minReplicaCount: 1
+  pollingInterval: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: foo-app
+  triggers:
+    - metadata:
+        httpScaledObject: foo-app
+        scalerAddress: keda-add-ons-http-external-scaler.default:9090
+      type: external-push
