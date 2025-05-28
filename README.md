@@ -44,7 +44,7 @@
    ```
    5. Load test
    ```
-   hey -z 60s -c 50 http://localhost:8000/foo
+   hey -z 60s -c 80 -q 200  http://localhost:8000/foo
    ```
 2. With Keda HttpScaledObject
    1. Deploy Deployment, Service and ScaledObject
@@ -63,7 +63,7 @@
    ```
    5. Load test
    ```
-   hey -z 60s -c 50 --host foo.local http://localhost:8080/foo
+   hey -z 60s -c 80 -q 200 --host foo.local http://localhost:8080/foo
    ```
 
 ### Steps to setup KEDA
