@@ -89,3 +89,29 @@
    ```sh
    helm upgrade --install http-add-on kedacore/keda-add-ons-http
    ```
+
+### Steps to setup VPA
+1. Clone autoscaler repository
+   ```shell
+   git clone https://github.com/kubernetes/autoscaler.git
+   ```
+2. Run to setup script
+   ```shell
+    ./autoscaler/vertical-pod-autoscaler/hack/vpa-up.sh
+   ```
+
+### Steps to make VPA trigger updates faster
+1. Update vpa recommender to send recommendations more frequenty
+   ```shell
+   # Edit vpa-recommender deployment in kube-system namespace
+   args:
+    - --recommender-interval=2s
+   ```
+2. Update vpa updater to update the pods more frequently
+   ```shell
+   # Edit vpa-updater deployment in kube-system namespace
+   args:
+    - --in-recommendation-bounds-eviction-lifetime-threshold=5s
+    - --updater-interval=5s
+   ```
+For more details about the flags, refer [here](https://github.com/kubernetes/autoscaler/blob/master/vertical-pod-autoscaler/docs/flags.md)
