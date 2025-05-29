@@ -5,7 +5,7 @@ metadata:
   labels:
     app: fizz-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: fizz-app
@@ -22,7 +22,7 @@ spec:
             - containerPort: 8000
           resources:
             requests:
-              cpu: "10m"
+              cpu: "40m"
             limits:
               cpu: "50m"
           readinessProbe:
@@ -49,6 +49,19 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: fizz-app
 spec:
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 0 # Set to 0 for near instant HPA scale-down decision
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 1
+    scaleUp:
+      stabilizationWindowSeconds: 0 # Set to 0 for near instant HPA scale-up decision
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 1
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
@@ -56,9 +69,9 @@ spec:
   minReplicas: 1
   maxReplicas: 20
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 50
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
