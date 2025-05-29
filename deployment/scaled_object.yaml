@@ -21,7 +21,7 @@ spec:
     requestRate:
       granularity: 1s
       targetValue: 5
-      window: 1s
+      window: 5s
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
