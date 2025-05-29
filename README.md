@@ -44,16 +44,21 @@
    ```
    5. Load test
    ```
-   hey -z 60s -c 80 -q 200  http://localhost:8000/foo
+   hey -z 60s -c 100 -q 200  http://localhost:8000/foo
    ```
 2. With Keda HttpScaledObject
-   1. Deploy Deployment, Service and ScaledObject
+   1. Increase the timeouts for interceptor by running the shell script
+   ```
+   chmod +x ./deployment/patch_keda_http_add_on.sh
+   ./deployment/patch_keda_http_add_on.sh
+   ```
+   2. Deploy Deployment, Service and ScaledObject
    ```
    kc apply -f deployment.yaml
    kc apply -f service.yaml
    kc apply -f scaled_object.yaml
    ```
-   2. Portforward the service for http add on's interceptor
+   3. Portforward the service for http add on's interceptor
    ```
    kc port-forward svc/keda-add-ons-http-interceptor-proxy 8080:8080
    ```
@@ -63,7 +68,7 @@
    ```
    5. Load test
    ```
-   hey -z 60s -c 80 -q 200 --host foo.local http://localhost:8080/foo
+   hey -z 60s -c 100 -q 200 --host foo.local http://localhost:8080/foo
    ```
 
 ### Steps to setup KEDA
