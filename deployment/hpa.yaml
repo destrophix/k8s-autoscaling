@@ -47,7 +47,7 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: fizz-app
+  name: fizz-app-hpa
 spec:
   behavior:
     scaleDown:
