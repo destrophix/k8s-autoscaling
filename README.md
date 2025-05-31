@@ -70,6 +70,10 @@
    ```
    hey -z 60s -c 100 -q 200 --host foo.local http://localhost:8080/foo
    ```
+   6. Get the metric
+   ```
+   kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/default/s0-http-default_002Ffoo-app?labelSelector=scaledobject.keda.sh/name=foo-app" | jq
+   ```
 
 ### Steps to setup KEDA
 
