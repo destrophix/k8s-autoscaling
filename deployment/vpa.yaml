@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fizz-buzz-app
+  name: ping-pong-app
   labels:
-    app: fizz-buzz-app
+    app: ping-pong-app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: fizz-buzz-app
+      app: ping-pong-app
   template:
     metadata:
       labels:
-        app: fizz-buzz-app
+        app: ping-pong-app
     spec:
       containers:
-        - name: fizz-buzz-app
+        - name: ping-pong-app
           image: foo-app:latest
           imagePullPolicy: Never
           ports:
@@ -35,10 +35,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: fizz-buzz-app
+  name: ping-pong-app
 spec:
   selector:
-    app: fizz-buzz-app
+    app: ping-pong-app
   ports:
     - protocol: TCP
       port: 8000
@@ -47,12 +47,12 @@ spec:
 apiVersion: "autoscaling.k8s.io/v1"
 kind: VerticalPodAutoscaler
 metadata:
-  name: fizz-buzz-app-vpa
+  name: ping-pong-app-vpa
 spec:
   targetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: fizz-buzz-app
+    name: ping-pong-app
   updatePolicy:
     updateMode: Recreate
   resourcePolicy:
