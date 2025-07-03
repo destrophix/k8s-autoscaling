@@ -13,10 +13,6 @@ spec:
     apiVersion: apps/v1
     name: foo-app
     port: 8000
-  replicas:
-    min: 1
-    max: 10
-  scaledownPeriod: 1
   scalingMetric:
     requestRate:
       granularity: 1s
