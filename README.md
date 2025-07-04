@@ -28,6 +28,12 @@
 
 ### Steps to simulate load
 
+Prequisite:
+   Build docker image for the app
+   ```
+   docker build -t foo-app:latest .
+   ```
+
 1. Without Keda
    1. Deploy Deployment and Service
    ```
